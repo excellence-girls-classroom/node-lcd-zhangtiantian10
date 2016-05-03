@@ -1,6 +1,3 @@
-/**
- * Created by zhangtian on 16-4-26.
- */
 var main = require('../main/main.js');
 var fixtures = require('./fixtures.js');
 describe('unit text',function () {
@@ -9,7 +6,9 @@ describe('unit text',function () {
     beforeEach(function () {
        LCDNumber = fixtures.loadLCDNumber();
     });
+    
     describe('splitNumber',function () {
+        
         it('correct',function () {
             var number = main.splitNumber(910);
             expect(number).toEqual([9,1,0]);

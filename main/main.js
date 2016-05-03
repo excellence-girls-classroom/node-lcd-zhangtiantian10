@@ -1,23 +1,23 @@
-exports.createLCDString = function (input) {
-    var LCDNumber = require('../text/fixtures.js');
+var LCDNumber = require('../text/fixtures.js');
+function createLCDString(input) {
     var LcdNumber = LCDNumber.loadLCDNumber();
-    var main = require('./main.js')
-    var numberArray = main.splitNumber(input);
-    var LCDArray = main.searchSameNumber(numberArray,LcdNumber);
-    main.print(LCDArray);
+    var numberArray = splitNumber(input);
+    var LCDArray = searchSameNumber(numberArray,LcdNumber);
+    print(LCDArray);
 
 }
 
-exports.splitNumber = function (input) {
+function splitNumber(input) {
     input = input + '';
     var numberArray = input.split('');
     for(var i = 0; i<numberArray.length;i++){
         numberArray[i] = parseInt(numberArray[i]);
     }
+    
     return numberArray;
 }
 
-exports.searchSameNumber = function (numberArray, LcdNumber) {
+function searchSameNumber(numberArray, LcdNumber) {
     var LCDArray = [];
     for(var j = 0; j<LcdNumber.length;j++) {
         LCDArray[j] = '';
@@ -25,13 +25,22 @@ exports.searchSameNumber = function (numberArray, LcdNumber) {
             LCDArray[j] += LcdNumber[j][numberArray[i]];
         }
     }
+    
     return LCDArray;
 }
 
-exports.print = function (LCDArray) {
+function print(LCDArray) {
     var printLCD = '';
     for(var i = 0; i<LCDArray.length;i++){
         printLCD += (LCDArray[i]+'\n');
     }
+    
     console.log(printLCD);
+}
+
+module.exports = {
+    createLCDString: createLCDString,
+    splitNumber: splitNumber,
+    searchSameNumber: searchSameNumber,
+    print: print
 }
