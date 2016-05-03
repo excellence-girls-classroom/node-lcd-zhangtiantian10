@@ -1,37 +1,50 @@
 var main = require('../main/main.js');
 var fixtures = require('./fixtures.js');
-describe('unit text',function () {
+describe('LCD',function () {
 
-    var LCDNumber;
+    var lcdNumber;
     beforeEach(function () {
-       LCDNumber = fixtures.loadLCDNumber();
+       lcdNumber = fixtures.loadLcdNumberDict();
     });
-    
-    describe('splitNumber',function () {
-        
-        it('correct',function () {
-            var number = main.splitNumber(910);
-            expect(number).toEqual([9,1,0]);
+    describe('unit test',function () {
+        describe('splitInput',function () {
+
+            it('correct',function () {
+                var number = main.splitInput(910);
+                expect(number).toEqual([9,1,0]);
+            });
+        });
+
+        describe('generateLCDLines',function () {
+
+            it('correct',function () {
+                expect(main.generateLCDLines([9,1,0],lcdNumber)).toEqual(['._. ... ._. ','|_| ..| |.| ','..| ..| |_| ']);
+            });
+        });
+
+        describe('print',function () {
+            var lcdLines;
+            beforeEach(function () {
+                lcdLines = ['._. ... ._. ','|_| ..| |.| ','..| ..| |_| '];
+            });
+
+            it('correct',function () {
+                var printLCD = '._. ... ._. \n'+
+                    '|_| ..| |.| \n'+
+                    '..| ..| |_| \n';
+                expect(main.generateLCDText(lcdLines)).toEqual(printLCD);
+            });
         });
     });
 
-    describe('searchSameNumber',function () {
-
+    describe('integration testing',function () {
         it('correct',function () {
-           expect(main.searchSameNumber([9,1,0],LCDNumber)).toEqual(['._. ... ._. ','|_| ..| |.| ','..| ..| |_| ']);
-        });
-    });
-
-    describe('print',function () {
-
-        it('correct',function () {
-
             spyOn(console, 'log');
-            main.createLCDString(910);
-            var printLCD = '._. ... ._. \n'+
-                '|_| ..| |.| \n'+
-                '..| ..| |_| \n';
+            main.createLCDString(51340);
+            var printLCD = '._. ... ._. ... ._. \n'+
+                '|_. ..| ._| |_| |.| \n'+
+                '._| ..| ._| ..| |_| \n';
             expect(console.log).toHaveBeenCalledWith(printLCD);
-        });
+        })
     })
 });
